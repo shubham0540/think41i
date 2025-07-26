@@ -1,11 +1,11 @@
 import React from "react";
-import ChatWindow from "./components/ChatWindow";
 import { ChatProvider } from "./context/ChatContext";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <ChatProvider>
-      <ChatWindow />
+      <Home />
     </ChatProvider>
   );
 }
