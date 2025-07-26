@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8000/api";
+const BASE_URL = "http://127.0.0.1:8000/api";
 
 export const sendChatMessage = async (message, conversation_id) => {
   const res = await fetch(`${BASE_URL}/chat`, {
@@ -10,7 +10,7 @@ export const sendChatMessage = async (message, conversation_id) => {
 };
 
 export const getConversations = async () => {
-  const res = await fetch(`${BASE_URL}/conversations`);
+  const res = await fetch(`${BASE_URL}/conversations?user_id=1`);
   return await res.json();
 };
 
