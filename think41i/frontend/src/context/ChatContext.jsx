@@ -1,5 +1,9 @@
 import React, { createContext, useState } from "react";
-import { sendChatMessage, getConversations, getConversationHistory } from "../api/chatApi";
+import {
+  sendChatMessage,
+  getConversations,
+  getConversationHistory,
+} from "../api/chatApi";
 
 export const ChatContext = createContext();
 
@@ -8,26 +12,34 @@ export const ChatProvider = ({ children }) => {
   const [conversationId, setConversationId] = useState(null);
   const [conversations, setConversations] = useState([]);
 
-  const sendMessage = async (text) => {
-    setMessages((prev) => [...prev, { sender: "user", text }]);
-    const res = await sendChatMessage(text, conversationId);
-    setConversationId(res.conversation_id);
-    setMessages((prev) => [...prev, { sender: "ai", text: res.response }]);
-  };
-
   const fetchConversations = async () => {
-    const res = await getConversations();
-    setConversations(res);
+    const data = await getConversations();
+    setConversations(data);
   };
 
   const loadConversation = async (id) => {
-    const history = await getConversationHistory(id);
     setConversationId(id);
+    const history = await getConversationHistory(id);
     setMessages(history);
   };
 
+  const sendMessage = async (text) => {
+    const res = await sendChatMessage(text, conversationId);
+    setConversationId(res.conversation_id);
+    setMessages((prev) => [...prev, { sender: "user", text }, { sender: "ai", text: res.response }]);
+    fetchConversations(); // refresh sidebar
+  };
+
   return (
-    <ChatContext.Provider value={{ messages, sendMessage, conversations, fetchConversations, loadConversation }}>
+    <ChatContext.Provider
+      value={{
+        messages,
+        sendMessage,
+        conversations,
+        fetchConversations,
+        loadConversation,
+      }}
+    >
       {children}
     </ChatContext.Provider>
   );

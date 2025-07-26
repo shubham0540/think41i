@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL")  # e.g. postgresql://user:pass@localhost:5432/ecommerce
+DATABASE_URL = os.getenv("DATABASE_URL")  # Example: postgresql+psycopg2://user:pass@localhost:5432/ecommerce
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
