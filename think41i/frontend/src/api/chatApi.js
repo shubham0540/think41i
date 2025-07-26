@@ -1,4 +1,5 @@
-const BASE_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000/api";
+const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000/api";
+
 
 export const sendChatMessage = async (message, conversation_id) => {
   const res = await fetch(`${BASE_URL}/chat`, {
